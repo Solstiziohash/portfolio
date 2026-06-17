@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 
-const NAV_LINKS = ["Home", "Skills", "Progetti", "Contatti"];
+const NAV_LINKS = [
+  { label: "Home", id: "home" },
+  { label: "Chi Sono", id: "chi-sono" },
+  { label: "Skills", id: "skills" },
+  { label: "Progetti", id: "progetti" },
+  { label: "Contatti", id: "contatti" },
+];
 
 const SKILLS = [
   { name: "JavaScript", level: 70 },
@@ -183,6 +189,7 @@ export default function Portfolio() {
   const [activeSection, setActiveSection] = useState("Home");
   const [nameDisplayed, setNameDisplayed] = useState("");
   const [nameDone, setNameDone] = useState(false);
+  const { ref: aboutRef, inView: aboutInView } = useInView();
   const { ref: contactRef, inView: contactInView } = useInView();
 
   // Typewriter for name
@@ -206,11 +213,10 @@ export default function Portfolio() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ["home", "skills", "progetti", "contatti"];
-      for (const s of [...sections].reverse()) {
-        const el = document.getElementById(s);
+      for (const { label, id } of [...NAV_LINKS].reverse()) {
+        const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 120) {
-          setActiveSection(s.charAt(0).toUpperCase() + s.slice(1));
+          setActiveSection(label);
           break;
         }
       }
@@ -261,18 +267,18 @@ export default function Portfolio() {
       <nav style={styles.nav}>
         <span style={styles.logo}>fs.dev</span>
         <ul style={styles.navLinks}>
-          {NAV_LINKS.map(link => (
-            <li key={link}>
+          {NAV_LINKS.map(({ label, id }) => (
+            <li key={id}>
               <button
-                onClick={() => scrollTo(link.toLowerCase())}
+                onClick={() => scrollTo(id)}
                 style={{
                   background: "none", border: "none", cursor: "pointer",
                   fontFamily: "Inter, sans-serif", fontSize: "0.85rem",
-                  color: activeSection === link ? "#F5F5F0" : "#555",
+                  color: activeSection === label ? "#F5F5F0" : "#555",
                   transition: "color 0.2s", padding: "0.25rem 0",
-                  borderBottom: activeSection === link ? "1px solid #7C6EF7" : "1px solid transparent",
+                  borderBottom: activeSection === label ? "1px solid #7C6EF7" : "1px solid transparent",
                 }}
-              >{link}</button>
+              >{label}</button>
             </li>
           ))}
         </ul>
@@ -328,6 +334,37 @@ export default function Portfolio() {
             onMouseLeave={e => { e.target.style.borderColor = "#2A2A2A"; e.target.style.color = "#888"; }}
           >Contattami</button>
         </div>
+      </section>
+
+      {/* Divider */}
+      <div style={{ maxWidth: "960px", margin: "0 auto", padding: "0 3rem" }}>
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, #1E1E1E, transparent)" }} />
+      </div>
+
+      {/* About */}
+      <section id="chi-sono" style={styles.section}>
+        <p style={styles.sectionLabel}>Chi sono</p>
+        <h2 style={styles.sectionTitle}>Due righe su di me</h2>
+        <p
+          ref={aboutRef}
+          style={{
+            fontFamily: "Inter, sans-serif",
+            fontSize: "1rem",
+            color: "#888",
+            lineHeight: "1.85",
+            maxWidth: "620px",
+            opacity: aboutInView ? 1 : 0,
+            transform: aboutInView ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.7s ease, transform 0.7s ease",
+          }}
+        >
+          Sono Francesco, ho 20 anni e una passione profonda per la programmazione.
+          Il mio obiettivo è diventare un{" "}
+          <span style={{ color: "#7C6EF7", fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>
+            AI Engineer
+          </span>
+          , perché mi piace automatizzare i processi e costruire strumenti che aiutano davvero le persone che ne hanno bisogno.
+        </p>
       </section>
 
       {/* Divider */}
