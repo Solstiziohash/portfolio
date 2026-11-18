@@ -358,12 +358,13 @@ export default function Portfolio() {
             transition: "opacity 0.7s ease, transform 0.7s ease",
           }}
         >
-          Sono Francesco, ho 20 anni e una passione profonda per la programmazione.
+          Ho 21 anni e una forte passione per l'informatica e la tecnologia.
           Il mio obiettivo è diventare un{" "}
           <span style={{ color: "#7C6EF7", fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>
-            AI Engineer
+            Cybersecurity Specialist
           </span>
-          , perché mi piace automatizzare i processi e costruire strumenti che aiutano davvero le persone che ne hanno bisogno.
+          , approfondendo il mondo della sicurezza informatica, delle reti e dei sistemi. 
+          Sono una persona curiosa e determinata, con tanta voglia di imparare, mettermi alla prova e trasformare la mia passione in una professione.
         </p>
       </section>
 
